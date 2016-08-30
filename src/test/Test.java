@@ -1,26 +1,14 @@
 package test;
 
-import fx.components.CanvasFx;
-import fx.components.ConfirmBoxFx;
 import common.ConstantsFx;
-import fx.components.RadioToggleGroupFx;
-import javafx.animation.StrokeTransition;
+import fx.components.GNode;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
-import javafx.scene.control.Separator;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.LineTo;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 /**
  * Test class to test utility classes
@@ -46,25 +34,33 @@ public class Test extends Application {
     public void start(Stage primaryStage) throws Exception {
 
 
-        Canvas canvas = new CanvasFx.Builder() {
-            @Override
-            public void drawShape(GraphicsContext gc) {
-                gc.setFill(Color.RED);
-                gc.fillOval(190, 255, 20, 30);
-                gc.strokeLine(12,25,190,250);
-                gc.setFill(Color.BLUE);
-                gc.fillOval(19, 25, 20, 30);
-                StrokeTransition st = new StrokeTransition(Duration.millis(3000), gc.getStroke(), Color.RED, Color.BLUE);
-                st.setCycleCount(4);
-                st.setAutoReverse(true);
+//        Canvas canvas = new CanvasFx.Builder() {
+//            @Override
+//            public void drawShape(GraphicsContext gc) {
+//                gc.setFill(Color.RED);
+//                gc.fillOval(190, 255, 20, 30);
+//                gc.strokeLine(12,25,190,250);
+//                gc.setFill(Color.BLUE);
+//                gc.fillOval(19, 25, 20, 30);
+////                StrokeTransition st = new StrokeTransition(Duration.millis(3000), gc.getStroke(), Color.RED, Color.BLUE);
+////                st.setCycleCount(4);
+////                st.setAutoReverse(true);
+////
+////                st.play();
+//            }
+//        }
+//                .width(300)
+//                .height(300)
+//                .build();
 
-                st.play();
-            }
-        }
-                .width(1000)
-                .height(1000)
+        Canvas canvas = new GNode.Builder("aman")
+                .shape(ConstantsFx.RECTANGLE)
+                .color(Color.BLUE)
+                .lineColor(Color.BLACK)
+                .lineWidth(1)
+                .width(50)
+                .height(50)
                 .build();
-
 
         Group root = new Group();
         root.getChildren().add(canvas);

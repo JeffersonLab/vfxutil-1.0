@@ -31,4 +31,8 @@ public class ConstantsFx {
 
     public static final String UDF = "undefined";
 
+    //node-arch constants
+    public static final int RECTANGLE = 13;
+    public static final int OVAL = 14;
+
 }

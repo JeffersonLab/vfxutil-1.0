@@ -1,11 +1,6 @@
 package appd.view;
 
-import appd.model.CadModel;
-import fx.components.CanvasFx;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.web.WebView;
 
 /**
  * Class description here....
