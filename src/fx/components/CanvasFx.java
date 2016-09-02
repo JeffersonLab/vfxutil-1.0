@@ -17,31 +17,31 @@ public class CanvasFx extends Canvas{
     public CanvasFx(double w, double h) {
         super(w, h);
 
-        setOnMousePressed(e -> {
-            orgSceneX = e.getSceneX();
-            orgSceneY = e.getSceneY();
-            orgTranslateX = ((Canvas) e.getSource()).getTranslateX();
-            orgTranslateY = ((Canvas) e.getSource()).getTranslateY();
-            System.out.println(orgSceneX+" "+orgTranslateX);
-            System.out.println(orgSceneY+" "+orgTranslateY);
-        });
-        setOnMouseDragged(e -> {
-            double offsetX = e.getSceneX() - orgSceneX;
-            double offsetY = e.getSceneY() - orgSceneY;
-            double newTranslateX = orgTranslateX + offsetX;
-            double newTranslateY = orgTranslateY + offsetY;
-            System.out.println(offsetX+" "+offsetY);
-            System.out.println(newTranslateX+" "+newTranslateY);
-            System.out.println();
-
-            translate(newTranslateX, newTranslateY);
-
-        });
-
-        setOnMouseDragReleased(e -> {
-            orgSceneX = e.getSceneX();
-            orgSceneY = e.getSceneY();
-        });
+//        setOnMousePressed(e -> {
+//            orgSceneX = e.getSceneX();
+//            orgSceneY = e.getSceneY();
+//            orgTranslateX = ((Canvas) e.getSource()).getTranslateX();
+//            orgTranslateY = ((Canvas) e.getSource()).getTranslateY();
+//            System.out.println(orgSceneX+" "+orgTranslateX);
+//            System.out.println(orgSceneY+" "+orgTranslateY);
+//        });
+//        setOnMouseDragged(e -> {
+//            double offsetX = e.getSceneX() - orgSceneX;
+//            double offsetY = e.getSceneY() - orgSceneY;
+//            double newTranslateX = orgTranslateX + offsetX;
+//            double newTranslateY = orgTranslateY + offsetY;
+//            System.out.println(offsetX+" "+offsetY);
+//            System.out.println(newTranslateX+" "+newTranslateY);
+//            System.out.println();
+//
+//            translate(newTranslateX, newTranslateY);
+//
+//        });
+//
+//        setOnMouseDragReleased(e -> {
+//            orgSceneX = e.getSceneX();
+//            orgSceneY = e.getSceneY();
+//        });
     }
 
 

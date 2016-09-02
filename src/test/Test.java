@@ -1,13 +1,15 @@
 package test;
 
 import common.ConstantsFx;
+import fx.components.GArch;
+import fx.components.GGrid;
 import fx.components.GNode;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
 /**
@@ -24,51 +26,42 @@ public class Test extends Application {
     Stage window;
     Button button;
     boolean b;
+    static Group root;
 
     public static void main(String[] args) {
         launch(args);
     }
 
+    public static void addArch(GArch arch){
+        root.getChildren().add(arch);
+        arch.toBack();
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
 
+        GGrid grid = new GGrid();
+        grid.drawGrid(50);
 
-//        Canvas canvas = new CanvasFx.Builder() {
-//            @Override
-//            public void drawShape(GraphicsContext gc) {
-//                gc.setFill(Color.RED);
-//                gc.fillOval(190, 255, 20, 30);
-//                gc.strokeLine(12,25,190,250);
-//                gc.setFill(Color.BLUE);
-//                gc.fillOval(19, 25, 20, 30);
-////                StrokeTransition st = new StrokeTransition(Duration.millis(3000), gc.getStroke(), Color.RED, Color.BLUE);
-////                st.setCycleCount(4);
-////                st.setAutoReverse(true);
-////
-////                st.play();
-//            }
-//        }
-//                .width(300)
-//                .height(300)
-//                .build();
-
-        Canvas canvas = new GNode.Builder("aman")
-                .shape(ConstantsFx.RECTANGLE)
-                .color(Color.BLUE)
-                .lineColor(Color.BLACK)
-                .lineWidth(1)
-                .width(50)
-                .height(50)
+        GNode node1 = new GNode.Builder("aman")
                 .build();
 
-        Group root = new Group();
-        root.getChildren().add(canvas);
+        GNode node2 = new GNode.Builder("chaman")
+                .shape(ConstantsFx.OVAL)
+                .build();
+
+        grid.addNode(node1);
+        grid.addNode(node2);
+
+        root = new Group();
+        root.getChildren().addAll(grid, node1, node2);
+        grid.toFront();
 
         primaryStage.setTitle("V Canvas Test");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
 
+        node1.startAnimation();
 
 //        window = new Stage();
 //        window.setTitle("Test window");

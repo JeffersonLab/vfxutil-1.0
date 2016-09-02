@@ -11,28 +11,28 @@ package common;
 public class ConstantsFx {
 
     // severity
-    public static final int INFO = 0;
-    public static final int WARNING = 1;
-    public static final int ERROR = 2;
+    public static final byte INFO = 0;
+    public static final byte WARNING = 1;
+    public static final byte ERROR = 2;
 
     // Clara app designer menu states
-    public static final int APP_DESIGNER_MODE = 3;
-    public static final int SERVICE_DESIGNER_MODE = 4;
-    public static final int APP_MONITOR_MODE = 5;
+    public static final byte APP_DESIGNER_MODE = 3;
+    public static final byte SERVICE_DESIGNER_MODE = 4;
+    public static final byte APP_MONITOR_MODE = 5;
 
     // toolbar constants used to define the icon of a button
-    public static final int OPEN = 6;
-    public static final int SAVE = 7;
-    public static final int SYNC = 8;
-    public static final int CUT= 9;
-    public static final int COPY= 10;
-    public static final int PASTE= 11;
-    public static final int CONNECTION= 12;
+    public static final byte OPEN = 6;
+    public static final byte SAVE = 7;
+    public static final byte SYNC = 8;
+    public static final byte CUT= 9;
+    public static final byte COPY= 10;
+    public static final byte PASTE= 11;
+    public static final byte CONNECTION= 12;
 
     public static final String UDF = "undefined";
 
     //node-arch constants
-    public static final int RECTANGLE = 13;
-    public static final int OVAL = 14;
+    public static final byte RECTANGLE = 13;
+    public static final byte OVAL = 14;
 
 }
