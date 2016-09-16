@@ -1,7 +1,7 @@
 package appd.view;
 
 import appd.model.CadModel;
-import common.ConstantsFx;
+import common.CadConstants;
 import fx.IconFx;
 import fx.components.ButtonFx;
 import javafx.geometry.Orientation;
@@ -27,6 +27,7 @@ public class CadMainToolBar extends ToolBar {
         super();
         this.model = model;
 
+        createButtons();
         getChildren().addAll(_open, _save, _sync, new Separator(Orientation.VERTICAL),
                 _cut, _copy, _paste, new Separator(Orientation.VERTICAL),
                 _connect);
@@ -37,7 +38,7 @@ public class CadMainToolBar extends ToolBar {
         _open = new ButtonFx.Builder()
                 .id("openId")
                 .toolTip("Open")
-                .image(IconFx.get(ConstantsFx.OPEN))
+                .image(IconFx.get(CadConstants.OPEN))
                 .action(e -> model.mOpen())
                 .build();
         _open.disableProperty().bind(model.editDisableProperty);
@@ -45,7 +46,7 @@ public class CadMainToolBar extends ToolBar {
         _save = new ButtonFx.Builder()
                 .id("saveId")
                 .toolTip("Save")
-                .image(IconFx.get(ConstantsFx.SAVE))
+                .image(IconFx.get(CadConstants.SAVE))
                 .action(e ->  model.mSave())
                 .build();
         _save.disableProperty().bind(model.editDisableProperty);
@@ -53,14 +54,14 @@ public class CadMainToolBar extends ToolBar {
         _sync = new ButtonFx.Builder()
                 .id("syncId")
                 .toolTip("Sync")
-                .image(IconFx.get(ConstantsFx.SYNC))
+                .image(IconFx.get(CadConstants.SYNC))
                 .action(e -> System.out.println()) // @todo call model appropriate method))
                 .build();
 
         _cut = new ButtonFx.Builder()
                 .id("cutId")
                 .toolTip("Cut")
-                .image(IconFx.get(ConstantsFx.CUT))
+                .image(IconFx.get(CadConstants.CUT))
                 .action(e -> System.out.println()) // @todo call model appropriate method))
                 .build();
         _cut.disableProperty().bind(model.editDisableProperty);
@@ -68,7 +69,7 @@ public class CadMainToolBar extends ToolBar {
         _copy = new ButtonFx.Builder()
                 .id("copyId")
                 .toolTip("Copy")
-                .image(IconFx.get(ConstantsFx.COPY))
+                .image(IconFx.get(CadConstants.COPY))
                 .action(e -> System.out.println()) // @todo call model appropriate method))
                 .build();
         _copy.disableProperty().bind(model.editDisableProperty);
@@ -76,7 +77,7 @@ public class CadMainToolBar extends ToolBar {
         _paste = new ButtonFx.Builder()
                 .id("pasteId")
                 .toolTip("Paste")
-                .image(IconFx.get(ConstantsFx.PASTE))
+                .image(IconFx.get(CadConstants.PASTE))
                 .action(e -> System.out.println()) // @todo call model appropriate method))
                 .build();
         _paste.disableProperty().bind(model.editDisableProperty);
@@ -84,7 +85,7 @@ public class CadMainToolBar extends ToolBar {
         _connect = new ButtonFx.Builder()
                 .id("connectId")
                 .toolTip("Connect")
-                .image(IconFx.get(ConstantsFx.CONNECTION))
+                .image(IconFx.get(CadConstants.CONNECTION))
                 .action(e -> System.out.println()) // @todo call model appropriate method))
                 .build();
     }

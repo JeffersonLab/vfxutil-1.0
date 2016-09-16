@@ -9,7 +9,7 @@ package common;
  *         Date 8/5/16
  * @version 1.x
  */
-public enum CommandsFx {
+public enum CadCommands {
     GO("GO") {
         @Override
         public void exec() {
@@ -34,7 +34,7 @@ public enum CommandsFx {
 
     private String cWord;
 
-    CommandsFx(String cWord) {
+    CadCommands(String cWord) {
         this.cWord = cWord;
     }
 

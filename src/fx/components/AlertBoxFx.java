@@ -1,6 +1,6 @@
 package fx.components;
 
-import common.ConstantsFx;
+import common.CadConstants;
 import fx.IconFx;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
@@ -27,7 +27,7 @@ public class AlertBoxFx {
     public static class Builder{
         private String title = "Attention!";
         private String message = "";
-        private int severity = ConstantsFx.INFO;
+        private int severity = CadConstants.INFO;
         private Modality modality = Modality.APPLICATION_MODAL;
         private int width = 250;
         private int height = 130;

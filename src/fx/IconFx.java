@@ -1,6 +1,6 @@
 package fx;
 
-import common.ConstantsFx;
+import common.CadConstants;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -47,40 +47,40 @@ public class IconFx {
 
 
     /**
-     * @param id integer values defined in {@link ConstantsFx}
+     * @param id integer values defined in {@link CadConstants}
      * @return ImageView object
      */
     public static ImageView get(int id) {
         ImageView result;
         switch (id) {
-            case ConstantsFx.INFO:
+            case CadConstants.INFO:
                 result = _info;
                 break;
-            case ConstantsFx.WARNING:
+            case CadConstants.WARNING:
                 result = _warning;
                 break;
-            case ConstantsFx.ERROR:
+            case CadConstants.ERROR:
                 result = _error;
                 break;
-            case ConstantsFx.OPEN:
+            case CadConstants.OPEN:
                 result = _open;
                 break;
-            case ConstantsFx.SAVE:
+            case CadConstants.SAVE:
                 result = _save;
                 break;
-            case ConstantsFx.SYNC:
+            case CadConstants.SYNC:
                 result = _sync;
                 break;
-            case ConstantsFx.CUT:
+            case CadConstants.CUT:
                 result = _cut;
                 break;
-            case ConstantsFx.COPY:
+            case CadConstants.COPY:
                 result = _copy;
                 break;
-            case ConstantsFx.PASTE:
+            case CadConstants.PASTE:
                 result = _paste;
                 break;
-            case ConstantsFx.CONNECTION:
+            case CadConstants.CONNECTION:
                 result = _connection;
                 break;
             default:

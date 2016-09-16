@@ -1,6 +1,6 @@
 package fx.components;
 
-import common.ConstantsFx;
+import common.CadConstants;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.MenuItem;
@@ -22,7 +22,7 @@ public class MenuItemFx extends MenuItem {
       super(builder.title);
 
       if(builder.imageView!=null) setGraphic(builder.imageView);
-        if (!builder.aclKey.equals(ConstantsFx.UDF) && !builder.aclLetter.equals(ConstantsFx.UDF)) {
+        if (!builder.aclKey.equals(CadConstants.UDF) && !builder.aclLetter.equals(CadConstants.UDF)) {
             setAccelerator(KeyCombination.keyCombination(builder.aclKey +"+"+builder.aclLetter));
         }
         setOnAction(builder.action);
@@ -31,8 +31,8 @@ public class MenuItemFx extends MenuItem {
     public static class Builder {
         private String title;
 
-        private String aclKey = ConstantsFx.UDF;
-        private String aclLetter = ConstantsFx.UDF;
+        private String aclKey = CadConstants.UDF;
+        private String aclLetter = CadConstants.UDF;
         private ImageView imageView;
         private EventHandler<ActionEvent> action = e-> System.out.println("Empty action");
 

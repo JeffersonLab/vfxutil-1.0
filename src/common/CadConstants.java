@@ -8,7 +8,7 @@ package common;
  *         Date 8/4/16
  * @version 1.x
  */
-public class ConstantsFx {
+public class CadConstants {
 
     // severity
     public static final byte INFO = 0;
@@ -34,5 +34,9 @@ public class ConstantsFx {
     //node-arch constants
     public static final byte RECTANGLE = 13;
     public static final byte OVAL = 14;
+
+    public static final int CANVAS_WIDTH = 500;
+    public static final int CANVAS_HEIGHT = 500;
+
 
 }

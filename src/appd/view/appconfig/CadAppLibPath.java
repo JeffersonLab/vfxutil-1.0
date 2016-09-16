@@ -1,14 +1,12 @@
-package util;
+package appd.view.appconfig;
 
 /**
  * Class description here....
  * <p>
  *
  * @author gurjyan
- *         Date 8/17/16
+ *         Date 9/15/16
  * @version 3.x
  */
-public class AppDUtil {
-
-
+public class CadAppLibPath {
 }

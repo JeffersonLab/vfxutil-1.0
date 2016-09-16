@@ -1,6 +1,6 @@
 package fx.components;
 
-import common.ConstantsFx;
+import common.CadConstants;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -18,19 +18,24 @@ import javafx.scene.image.ImageView;
 public class ButtonFx extends Button {
 
     private ButtonFx(Builder builder){
-        super();
+        super(builder.txt);
         if(builder.image!=null) setGraphic(builder.image);
-        if(!builder.id.equals(ConstantsFx.UDF)) setId(builder.id);
-        if(!builder.toolTip.equals(ConstantsFx.UDF)) setTooltip(new Tooltip(builder.toolTip));
+        if(!builder.id.equals(CadConstants.UDF)) setId(builder.id);
+        if(!builder.toolTip.equals(CadConstants.UDF)) setTooltip(new Tooltip(builder.toolTip));
         setOnAction(builder.action);
     }
 
     public static class Builder {
-        private String id = ConstantsFx.UDF;
-        private String toolTip = ConstantsFx.UDF;
+        private String id = CadConstants.UDF;
+        private String toolTip = CadConstants.UDF;
         private ImageView image;
         private EventHandler<ActionEvent> action = e-> System.out.println("Empty action");
+        private String txt = "";
 
+        public Builder text(String txt){
+            this.txt = txt;
+            return this;
+        }
 
         public Builder id(String id){
             this.id = id;

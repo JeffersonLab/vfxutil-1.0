@@ -1,6 +1,6 @@
 package fx.components;
 
-import common.ConstantsFx;
+import common.CadConstants;
 import fx.IconFx;
 import javafx.collections.ObservableList;
 import javafx.geometry.Orientation;
@@ -36,7 +36,7 @@ public class ListBoxFx {
         window.setMinHeight(builder.height);
 
         // Create a label for the message
-        Label label = new Label(builder.message, IconFx.get(ConstantsFx.INFO));
+        Label label = new Label(builder.message, IconFx.get(CadConstants.INFO));
         label.setContentDisplay(ContentDisplay.LEFT);
 
         ListView<String> listView = new ListView<>();

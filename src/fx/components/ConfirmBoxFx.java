@@ -1,6 +1,6 @@
 package fx.components;
 
-import common.ConstantsFx;
+import common.CadConstants;
 import fx.IconFx;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
@@ -31,7 +31,7 @@ public class ConfirmBoxFx {
         private Modality modality = Modality.APPLICATION_MODAL;
         private int width = 250;
         private int height = 130;
-        private int severity = ConstantsFx.INFO;
+        private int severity = CadConstants.INFO;
 
 
         public Builder(String message) {

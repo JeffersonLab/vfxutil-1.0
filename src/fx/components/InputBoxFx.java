@@ -1,6 +1,6 @@
 package fx.components;
 
-import common.ConstantsFx;
+import common.CadConstants;
 import fx.IconFx;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
@@ -20,7 +20,7 @@ import javafx.stage.Stage;
  * @version 1.x
  */
 public class InputBoxFx {
-    private static String result = ConstantsFx.UDF;
+    private static String result = CadConstants.UDF;
 
     public static class Builder{
         private String title = "Attention!";
@@ -78,7 +78,7 @@ public class InputBoxFx {
         window.setMinHeight(builder.height);
 
         // Create a label for the message
-        Label label = new Label(builder.message, IconFx.get(ConstantsFx.INFO));
+        Label label = new Label(builder.message, IconFx.get(CadConstants.INFO));
         label.setContentDisplay(ContentDisplay.LEFT);
 
         TextField inputText = new TextField();

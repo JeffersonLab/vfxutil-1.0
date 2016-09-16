@@ -1,11 +1,16 @@
 package fx.components;
 
-import common.ConstantsFx;
+import common.CadException;
+import common.CadColor;
+import common.CadConstants;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.*;
 import javafx.scene.paint.*;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,20 +24,20 @@ import java.util.Map;
  *         Date 8/29/16
  * @version 1.x
  */
-public class GNode extends Canvas {
+public class NodeFx extends Canvas implements Serializable {
 
 
     private String name;
-    private Map<String, GArch>
+    private Map<String, ArchFx>
             inLinks = new HashMap<>(), outLinks = new HashMap<>();
-    private GraphicsContext gc;
+    private transient GraphicsContext gc;
     private Builder builder;
     private Animation animation;
     private double currentX, currentY;
     private double initialX, initialY;
     private double lineWidth;
 
-    private GNode(Builder builder) {
+    private NodeFx(Builder builder) {
         super(builder.canvasWidth, builder.canvasHeight);
         gc = getGraphicsContext2D();
         this.builder = builder;
@@ -43,21 +48,22 @@ public class GNode extends Canvas {
         this.initialY = builder.y;
         this.lineWidth = builder.lineWidth;
 
-        gc.setFill(builder.color);
+        gc.setFill(Color.valueOf(builder.color.getRGB()));
         gc.setStroke(builder.lineColor);
         gc.setLineWidth(builder.lineWidth);
 
         switch (builder.shape) {
-            case ConstantsFx.RECTANGLE:
+            case CadConstants.RECTANGLE:
                 gc.fillRect(builder.x, builder.y, builder.width, builder.height);
                 gc.strokeRoundRect(builder.x, builder.y, builder.width, builder.height, 0, 0);
                 break;
-            case ConstantsFx.OVAL:
+            case CadConstants.OVAL:
                 gc.fillOval(builder.x, builder.y, builder.width, builder.height);
                 gc.strokeOval(builder.x, builder.y, builder.width, builder.height);
 
                 break;
         }
+
         gc.setFill(Color.BLACK);
         gc.fillText(name, builder.x,
                 builder.x + builder.height + 10 + builder.lineWidth,
@@ -65,6 +71,7 @@ public class GNode extends Canvas {
 
         animation = new Animation();
 //        animation.start();
+
     }
 
 
@@ -100,19 +107,23 @@ public class GNode extends Canvas {
         return lineWidth;
     }
 
-    public Map<String, GArch> getInLinks() {
+    public Map<String, ArchFx> getInLinks() {
         return inLinks;
     }
 
-    public Map<String, GArch> getOutLinks() {
+    public Map<String, ArchFx> getOutLinks() {
         return outLinks;
     }
 
-    public void addInLink(GArch link) {
+    public Builder getBuilder() {
+        return builder;
+    }
+
+    public void addInLink(ArchFx link) {
         inLinks.put(link.getName(), link);
     }
 
-    public void addOutLink(GArch link) {
+    public void addOutLink(ArchFx link) {
         outLinks.put(link.getName(), link);
     }
 
@@ -136,6 +147,22 @@ public class GNode extends Canvas {
     public void clearOutLinks() {
         outLinks.forEach((s, gArch) -> gArch.delete());
         outLinks.clear();
+    }
+
+    public List<String> getInNodeNames() throws CadException {
+        List<String> result = new ArrayList<>();
+        if(inLinks!=null && !inLinks.isEmpty())
+       inLinks.keySet().forEach(e -> result.add( e.split("`")[0]));
+        if (inLinks.isEmpty()) throw new CadException("missing input nodes");
+        return result;
+    }
+
+    public List<String> getOutNodeNames()throws CadException {
+        List<String> result = new ArrayList<>();;
+        if(outLinks!=null && !outLinks.isEmpty())
+            outLinks.keySet().forEach(e -> result.add( e.split("`")[1]));
+        if (outLinks.isEmpty()) throw new CadException("missing input nodes");
+        return result;
     }
 
     public void delete() {
@@ -179,19 +206,36 @@ public class GNode extends Canvas {
         animation.stop();
     }
 
-    private class Animation extends AnimationTimer {
 
-        double pOffset = 10;
-        double pSize = 5;
-        int period = 30; //sec
-        int count = 0;
+    @Override
+    public boolean isResizable()
+    {
+        return true;
+    }
 
-        public Animation() {
+    @Override
+    public void resize(double width, double height)
+    {
+        super.setWidth(width);
+        super.setHeight(height);
+    }
+
+
+
+    private class Animation extends AnimationTimer implements Serializable {
+
+        private double pOffset = 10;
+        private double pSize = 5;
+        private int period = 30; //sec
+        private int count = 0;
+        private CadColor red = CadColor.RED;
+
+        Animation() {
             super();
             // 3d  effect
             gc.strokeRoundRect(builder.x + pOffset, builder.y + pOffset, pSize, pSize, 0, 0);
             gc.clearRect(builder.x + pOffset, builder.y + pOffset, pSize, pSize);
-            gc.setFill(builder.color);
+            gc.setFill(Color.web(builder.color.getRGB()));
             gc.fillRect(builder.x + pOffset, builder.y + pOffset, pSize, pSize);
         }
 
@@ -200,11 +244,11 @@ public class GNode extends Canvas {
             count++;
             if (count < period) {
                 gc.clearRect(builder.x + pOffset, builder.y + pOffset, pSize, pSize);
-                gc.setFill(builder.color);
+                gc.setFill(Color.web(builder.color.getRGB()));
                 gc.fillRect(builder.x + pOffset, builder.y + pOffset, pSize, pSize);
             } else if (count < period * 2) {
                 gc.clearRect(builder.x + pOffset, builder.y + pOffset, pSize, pSize);
-                gc.setFill(Color.RED);
+                gc.setFill(Color.web(red.getRGB()));
                 gc.fillRect(builder.x + pOffset, builder.y + pOffset, pSize, pSize);
             } else {
                 count = 0;
@@ -221,11 +265,11 @@ public class GNode extends Canvas {
         public void stop() {
             super.stop();
             switch (builder.shape) {
-                case ConstantsFx.RECTANGLE:
+                case CadConstants.RECTANGLE:
                     gc.fillRect(builder.x, builder.y, builder.width, builder.height);
                     gc.strokeRoundRect(builder.x, builder.y, builder.width, builder.height, 0, 0);
                     break;
-                case ConstantsFx.OVAL:
+                case CadConstants.OVAL:
                     gc.fillOval(builder.x, builder.y, builder.width, builder.height);
                     gc.strokeOval(builder.x, builder.y, builder.width, builder.height);
 
@@ -234,18 +278,18 @@ public class GNode extends Canvas {
             // 3d  effect
             gc.strokeRoundRect(builder.x + pOffset, builder.y + pOffset, pSize, pSize, 0, 0);
             gc.clearRect(builder.x + pOffset, builder.y + pOffset, pSize, pSize);
-            gc.setFill(builder.color);
+            gc.setFill(Color.web(builder.color.getRGB()));
             gc.fillRect(builder.x + pOffset, builder.y + pOffset, pSize, pSize);
         }
     }
 
-    public static class Builder {
+    public static class Builder implements Serializable {
 
-        private double canvasWidth = 500;
-        private double canvasHeight = 500;
+        public double canvasWidth = CadConstants.CANVAS_WIDTH;
+        public double canvasHeight = CadConstants.CANVAS_HEIGHT;
 
-        private int shape = ConstantsFx.RECTANGLE; // default shape
-        private Paint color = Color.YELLOWGREEN; // default color
+        private int shape = CadConstants.RECTANGLE; // default shape
+        private CadColor color = CadColor.SPRING; // default color
 
         // rectangle and oval
         private double x = 10;
@@ -254,7 +298,7 @@ public class GNode extends Canvas {
         private double height = 50;
 
         // line around a shape
-        private Paint lineColor = Color.BLACK;
+        private transient Paint lineColor = Color.BLACK;
         private double lineWidth = 0;
 
         // text under the shape
@@ -279,7 +323,7 @@ public class GNode extends Canvas {
             return this;
         }
 
-        public Builder color(Paint color) {
+        public Builder color(CadColor color) {
             this.color = color;
             return this;
         }
@@ -315,8 +359,8 @@ public class GNode extends Canvas {
             return this;
         }
 
-        public GNode build() {
-            return new GNode(this);
+        public NodeFx build() {
+            return new NodeFx(this);
         }
 
     }

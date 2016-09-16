@@ -1,6 +1,7 @@
 package appd.model;
 
-import common.ConstantsFx;
+import appd.view.appconfig.CadAppConfigMain;
+import common.CadConstants;
 import fx.components.ConfirmBoxFx;
 import fx.components.InputBoxFx;
 import javafx.beans.property.BooleanProperty;
@@ -21,7 +22,7 @@ public class CadModel {
     public BooleanProperty serviceDDisableProperty = new SimpleBooleanProperty(false);
     public BooleanProperty editDisableProperty = new SimpleBooleanProperty(false);
 
-    private int designerState = ConstantsFx.APP_DESIGNER_MODE;
+    private int designerState = CadConstants.APP_DESIGNER_MODE;
 
 
     /**
@@ -31,17 +32,17 @@ public class CadModel {
     public void setState(int designerState) {
         this.designerState = designerState;
         switch (designerState) {
-            case ConstantsFx.APP_DESIGNER_MODE:
+            case CadConstants.APP_DESIGNER_MODE:
                 appDDisableProperty.set(false);
                 serviceDDisableProperty.set(true);
                 editDisableProperty.set(false);
                 break;
-            case ConstantsFx.SERVICE_DESIGNER_MODE:
+            case CadConstants.SERVICE_DESIGNER_MODE:
                 appDDisableProperty.set(true);
                 serviceDDisableProperty.set(false);
                 editDisableProperty.set(false);
                 break;
-            case ConstantsFx.APP_MONITOR_MODE:
+            case CadConstants.APP_MONITOR_MODE:
                 appDDisableProperty.set(true);
                 serviceDDisableProperty.set(true);
                 editDisableProperty.set(true);
@@ -54,43 +55,45 @@ public class CadModel {
     }
 
     public void mNew(){
-        {
-            String result = ConstantsFx.UDF;
-            switch (designerState){
-                case ConstantsFx.APP_DESIGNER_MODE:
-                    result = new InputBoxFx.Builder("Enter the name of the application")
-                            .title("Input Dialog")
-                            .width(300)
-                            .height(150)
-                            .prompt("name")
-                            .build().get();
+        new CadAppConfigMain();
 
-                    if(!result.equals(ConstantsFx.UDF)){
-                        //@todo calls model appropriate method
-                    }
-                    break;
-                case ConstantsFx.SERVICE_DESIGNER_MODE:
-                    result = new InputBoxFx.Builder("Enter the name of the application")
-                            .title("Input Dialog")
-                            .width(300)
-                            .height(150)
-                            .prompt("name")
-                            .build().get();
-
-                    if(!result.equals(ConstantsFx.UDF)){
-                        //@todo call model appropriate method
-                    }
-                    break;
-            }
-        }
+//        {
+//            String result = CadConstants.UDF;
+//            switch (designerState){
+//                case CadConstants.APP_DESIGNER_MODE:
+//                    result = new InputBoxFx.Builder("Enter the name of the application")
+//                            .title("Input Dialog")
+//                            .width(300)
+//                            .height(150)
+//                            .prompt("name")
+//                            .build().get();
+//
+//                    if(!result.equals(CadConstants.UDF)){
+//                        //@todo calls model appropriate method
+//                    }
+//                    break;
+//                case CadConstants.SERVICE_DESIGNER_MODE:
+//                    result = new InputBoxFx.Builder("Enter the name of the application")
+//                            .title("Input Dialog")
+//                            .width(300)
+//                            .height(150)
+//                            .prompt("name")
+//                            .build().get();
+//
+//                    if(!result.equals(CadConstants.UDF)){
+//                        //@todo call model appropriate method
+//                    }
+//                    break;
+//            }
+//        }
     }
 
     public void mOpen(){
             switch (designerState){
-                case ConstantsFx.APP_DESIGNER_MODE:
+                case CadConstants.APP_DESIGNER_MODE:
                     //@todo tree view of applications standard dir
                     break;
-                case ConstantsFx.SERVICE_DESIGNER_MODE:
+                case CadConstants.SERVICE_DESIGNER_MODE:
                     //@todo tree view of services standard dir $CLARA_HOME/services
                     break;
             }
@@ -99,10 +102,10 @@ public class CadModel {
 
     public void mSave(){
         switch (designerState) {
-            case ConstantsFx.APP_DESIGNER_MODE:
+            case CadConstants.APP_DESIGNER_MODE:
                 // @todo call model appropriate method
                 break;
-            case ConstantsFx.SERVICE_DESIGNER_MODE:
+            case CadConstants.SERVICE_DESIGNER_MODE:
                 // @todo call model appropriate method
                 break;
         }
@@ -117,10 +120,10 @@ public class CadModel {
                 .build().get();
 
         switch (designerState) {
-            case ConstantsFx.APP_DESIGNER_MODE:
+            case CadConstants.APP_DESIGNER_MODE:
                 // @todo call model appropriate method
                 break;
-            case ConstantsFx.SERVICE_DESIGNER_MODE:
+            case CadConstants.SERVICE_DESIGNER_MODE:
                 // @todo call model appropriate method
                 break;
         }
@@ -132,7 +135,7 @@ public class CadModel {
                 .width(300)
                 .height(150)
                 .title("Delete Service")
-                .severity(ConstantsFx.WARNING)
+                .severity(CadConstants.WARNING)
                 .build().get();
         //@todo call the method from the model  with this b
     }
@@ -142,7 +145,7 @@ public class CadModel {
                 .width(300)
                 .height(150)
                 .title("Delete Service Link")
-                .severity(ConstantsFx.WARNING)
+                .severity(CadConstants.WARNING)
                 .build().get();
         //@todo call the method from the model  with this b
     }

@@ -17,15 +17,15 @@ import java.util.Map;
  *         Date 8/5/16
  * @version 1.x
  */
-public class UtilFx {
+public class CadUtil {
 
     // for JSON parser
     private static ScriptEngine engine =
             new ScriptEngineManager().getEngineByName("javascript");
 
     // Executes word commands, such as go, move, defined and implemented in
-    // {@see} CommandsFx Enum
-    public static void execCmd(CommandsFx cmd) {
+    // {@see} CadCommands Enum
+    public static void execCmd(CadCommands cmd) {
             cmd.exec();
     }
 
@@ -45,4 +45,11 @@ public class UtilFx {
         } else return null;
     }
 
+    public static void sleep(int ms){
+        try {
+            Thread.sleep(ms);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }

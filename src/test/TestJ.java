@@ -1,8 +1,8 @@
 package test;
 
 
-import common.CommandsFx;
-import common.UtilFx;
+import common.CadCommands;
+import common.CadUtil;
 
 /**
  * Class description here....
@@ -15,6 +15,6 @@ import common.UtilFx;
 public class TestJ {
 
     public static void main(String[] args) {
-        UtilFx.execCmd(CommandsFx.GO);
+        CadUtil.execCmd(CadCommands.GO);
     }
 }
