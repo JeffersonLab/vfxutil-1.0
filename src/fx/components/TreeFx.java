@@ -57,7 +57,7 @@ public class TreeFx {
        ObservableList<TreeItem<String>> c = tree.getSelectionModel().getSelectedItems();
         List<TreeItem<String>> r = new ArrayList<>();
 
-        if (c!=null) {
+        if (c!=null && !c.isEmpty() && c.get(0).getParent()!=null) {
             c.forEach(r::add);
 
             c.forEach(e -> {
