@@ -7,6 +7,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.io.*;
@@ -40,7 +41,7 @@ public class GridDeTest extends Application {
             fileIn.close();
 
             // recreate a new CadCanvas object
-            grid = new CadCanvas(root);
+            grid = new CadCanvas(primaryStage, root,0);
             grid.drawGrid();
             root.getChildren().add(grid);
 
@@ -81,9 +82,9 @@ public class GridDeTest extends Application {
 
 
             // resizing
-            primaryStage.widthProperty().addListener(observable ->
-                    root.getChildren().forEach(e ->
-                            e.resize(primaryStage.getWidth(), primaryStage.getHeight())));
+//            primaryStage.widthProperty().addListener(observable ->
+//                    root.getChildren().forEach(e ->
+//                            e.resize(primaryStage.getWidth(), primaryStage.getHeight())));
 
         } catch (IOException i) {
             i.printStackTrace();

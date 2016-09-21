@@ -15,22 +15,24 @@ import javafx.scene.control.ToolBar;
  *
  * @author gurjyan
  *         Date 8/16/16
- * @version 3.x
+ * @version 1.x
  */
 public class CadMainToolBar extends ToolBar {
 
-    private Button _open, _save, _sync, _cut, _copy, _paste, _connect;
+    private Button _open, _save, _sync, _cut, _copy, _paste, _run;
 
     private CadModel model;
+    private CadMain owner;
 
-    public CadMainToolBar(CadModel model) {
+    public CadMainToolBar(CadModel model, CadMain owner) {
         super();
         this.model = model;
+        this.owner = owner;
 
         createButtons();
-        getChildren().addAll(_open, _save, _sync, new Separator(Orientation.VERTICAL),
-                _cut, _copy, _paste, new Separator(Orientation.VERTICAL),
-                _connect);
+        getItems().addAll(_open, _save, _sync, new Separator(Orientation.VERTICAL),new Separator(Orientation.VERTICAL),
+                _cut, _copy, _paste, new Separator(Orientation.VERTICAL),new Separator(Orientation.VERTICAL),
+                _run);
     }
 
 
@@ -82,10 +84,10 @@ public class CadMainToolBar extends ToolBar {
                 .build();
         _paste.disableProperty().bind(model.editDisableProperty);
 
-        _connect = new ButtonFx.Builder()
-                .id("connectId")
-                .toolTip("Connect")
-                .image(IconFx.get(CadConstants.CONNECTION))
+        _run = new ButtonFx.Builder()
+                .id("runId")
+                .toolTip("Start Data Processing")
+                .image(IconFx.get(CadConstants.PLAY))
                 .action(e -> System.out.println()) // @todo call model appropriate method))
                 .build();
     }

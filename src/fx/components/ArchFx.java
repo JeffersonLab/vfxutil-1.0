@@ -6,6 +6,7 @@ import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 import java.io.Serializable;
 
@@ -27,6 +28,10 @@ public class ArchFx extends Canvas implements Serializable {
 
     private ArchFx(Builder builder) {
         super(builder.canvasWidth, builder.canvasHeight);
+
+        widthProperty().bind(builder.primaryStage.widthProperty());
+        heightProperty().bind(builder.primaryStage.heightProperty());
+
         gc = getGraphicsContext2D();
         this.builder =builder;
         this.name = builder.name;
@@ -38,6 +43,7 @@ public class ArchFx extends Canvas implements Serializable {
         gc.setLineWidth(builder.width);
         gc.strokeLine(xStart, yStart, xEnd, yEnd);
         gc.fillOval(xEnd, yEnd, ARR_SIZE, ARR_SIZE);
+
 
 //        new Animation().start();
 
@@ -179,12 +185,9 @@ public class ArchFx extends Canvas implements Serializable {
     }
 
     @Override
-    public void resize(double width, double height)
-    {
-        super.setWidth(width);
-        super.setHeight(height);
+    public void resize(double width, double height) {
+        redraw();
     }
-
 
     private class Animation extends AnimationTimer implements Serializable {
         int count = 0;
@@ -213,8 +216,10 @@ public class ArchFx extends Canvas implements Serializable {
         private CadColor color = CadColor.BLACK;
         private double width = 1;
         private String name = CadConstants.UDF;
+        private Stage primaryStage;
 
-        public Builder() {
+        public Builder(Stage primaryStage) {
+            this.primaryStage = primaryStage;
         }
 
         public Builder canvasWidth(double canvasWidth) {

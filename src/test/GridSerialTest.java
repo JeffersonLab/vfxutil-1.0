@@ -8,6 +8,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.io.FileOutputStream;
@@ -34,7 +35,7 @@ public class GridSerialTest extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         Group root = new Group();
-        grid = new CadCanvas(root);
+        grid = new CadCanvas(primaryStage, root,0);
         grid.drawGrid();
 
         NodeFx node1 = new NodeFx.Builder("aman")
@@ -65,10 +66,10 @@ public class GridSerialTest extends Application {
         // exiting
         primaryStage.setOnCloseRequest(event -> Platform.exit());
 
-        // resizing
-        primaryStage.widthProperty().addListener(observable ->
-                root.getChildren().forEach(e ->
-                        e.resize(primaryStage.getWidth(), primaryStage.getHeight())));
+//        // resizing
+//        primaryStage.widthProperty().addListener(observable ->
+//                root.getChildren().forEach(e ->
+//                        e.resize(primaryStage.getWidth(), primaryStage.getHeight())));
     }
 
     @Override

@@ -8,6 +8,7 @@ import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -34,16 +35,20 @@ public class CadCanvas extends Canvas implements Serializable {
     private ArchFx _arch = null;
     private CadColor black = CadColor.BLACK;
 
-    public CadCanvas(Group root) {
+    public CadCanvas(Stage primaryStage, Group root, int yOffset) {
         super(CadConstants.CANVAS_WIDTH, CadConstants.CANVAS_HEIGHT);
         this.root = root;
+
+        widthProperty().bind(primaryStage.widthProperty());
+        heightProperty().bind(primaryStage.heightProperty());
+
         gc = getGraphicsContext2D();
         gc.setStroke(Color.web(black.getRGB()));
         gc.setLineWidth(0.5);
 
         setOnMouseClicked(e -> {
             orgSceneX = e.getSceneX();
-            orgSceneY = e.getSceneY();
+            orgSceneY = e.getSceneY() - yOffset;
             // find NodeFx with this coordinates
             sourceNode = findNode(orgSceneX, orgSceneY);
             if (sourceNode != null) {
@@ -69,14 +74,14 @@ public class CadCanvas extends Canvas implements Serializable {
 
         setOnMousePressed(e -> {
             orgSceneX = e.getSceneX();
-            orgSceneY = e.getSceneY();
+            orgSceneY = e.getSceneY() - yOffset;
             // find NodeFx with this coordinates
             sourceNode = findNode(orgSceneX, orgSceneY);
             if (sourceNode != null) {
                 orgTranslateX = sourceNode.getTranslateX();
                 orgTranslateY = sourceNode.getTranslateY();
                 if (e.isControlDown()) {
-                    _arch = new ArchFx.Builder().build();
+                    _arch = new ArchFx.Builder(primaryStage).build();
                     addArch(_arch);
                 }
 
@@ -85,25 +90,29 @@ public class CadCanvas extends Canvas implements Serializable {
 
         setOnMouseDragged(e -> {
             double offsetX = e.getSceneX() - orgSceneX;
-            double offsetY = e.getSceneY() - orgSceneY;
+            double offsetY = (e.getSceneY() - yOffset) - orgSceneY;
             double newTranslateX = orgTranslateX + offsetX;
             double newTranslateY = orgTranslateY + offsetY;
-            if (sourceNode != null) {
-                if (e.isControlDown()) {
-                    _arch.draw(sourceNode.getCurrentX() + sourceNode.getNodeWidth(),
-                            sourceNode.getCurrentY() + (sourceNode.getNodeHeight() / 2),
-                            e.getSceneX(),
-                            e.getSceneY(), CadColor.BLACK);
-                } else {
-                    sourceNode.translate(newTranslateX, newTranslateY);
+
+            // this is for not going out of dedicated canvas space
+            if(newTranslateX < 0) newTranslateX = 0;
+            if(newTranslateY < 0) newTranslateY = 0;
+                if (sourceNode != null) {
+                    if (e.isControlDown()) {
+                        _arch.draw(sourceNode.getCurrentX() + sourceNode.getNodeWidth(),
+                                sourceNode.getCurrentY() + (sourceNode.getNodeHeight() / 2),
+                                e.getSceneX(),
+                                e.getSceneY() - yOffset, CadColor.BLACK);
+                    } else {
+                        sourceNode.translate(newTranslateX, newTranslateY);
+                    }
                 }
-            }
         });
 
         setOnMouseReleased(e -> {
             if (e.isControlDown()) {
                 // find NodeFx with this coordinates
-                NodeFx destinationNode = findNode(e.getSceneX(), e.getSceneY());
+                NodeFx destinationNode = findNode(e.getSceneX(), e.getSceneY() - yOffset);
                 if (destinationNode != null && sourceNode != null) {
                     _arch.setName(sourceNode.getName(), destinationNode.getName());
 
@@ -155,9 +164,16 @@ public class CadCanvas extends Canvas implements Serializable {
     }
 
     private NodeFx findNode(double x, double y) {
-
         if (nodes.isEmpty()) return null;
         try {
+
+//            nodes.values().forEach(v -> {
+//                System.out.println(v.getCurrentX() + " x " + x + " x " + (v.getCurrentX() + v.getNodeWidth()));
+//                System.out.println(v.getCurrentY() + " y " + y + " y " + (v.getCurrentY() + v.getNodeHeight()));
+//                System.out.println("\n");
+//            });
+
+
             return nodes.values()
                     .stream()
                     .filter(v -> x >= v.getCurrentX() && x <= (v.getCurrentX() + v.getNodeWidth()) &&
@@ -200,8 +216,6 @@ public class CadCanvas extends Canvas implements Serializable {
 
     @Override
     public void resize(double width, double height) {
-        super.setWidth(width);
-        super.setHeight(height);
         removeGrid();
         drawGrid();
     }

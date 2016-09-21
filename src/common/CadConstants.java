@@ -28,12 +28,16 @@ public class CadConstants {
     public static final byte COPY= 10;
     public static final byte PASTE= 11;
     public static final byte CONNECTION= 12;
+    public static final byte PLAY= 13;
+    public static final byte LIB= 14;
+    public static final byte ENGINE = 15;
+    public static final byte SERVICE = 16;
 
     public static final String UDF = "undefined";
 
     //node-arch constants
-    public static final byte RECTANGLE = 13;
-    public static final byte OVAL = 14;
+    public static final byte RECTANGLE = 17;
+    public static final byte OVAL = 18;
 
     public static final int CANVAS_WIDTH = 500;
     public static final int CANVAS_HEIGHT = 500;

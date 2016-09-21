@@ -1,4 +1,4 @@
-package appd.view.appconfig;
+package appd.view;
 
 import common.CadConstants;
 import fx.IconFx;
@@ -30,14 +30,14 @@ import java.util.List;
  *         Date 9/15/16
  * @version 1.x
  */
-public class CadAppConfigMain {
+public class CadAppConfig {
 
     private double width = 600;
     private double height = 500;
 
     private Stage window;
 
-    public CadAppConfigMain() {
+    public CadAppConfig() {
         // Create a stage
         window = new Stage();
         // This will lock the parent window before this one exists
@@ -65,11 +65,11 @@ public class CadAppConfigMain {
 
         Tab t_lib = new Tab("Service Libraries");
         t_lib.setClosable(false);
-        t_lib.setContent(createFcNode("Libraries",IconFx.get(CadConstants.OPEN)));
+        t_lib.setContent(createFcNode("Libraries",IconFx.get(CadConstants.LIB)));
 
         Tab t_engine = new Tab("Service Engines");
         t_engine.setClosable(false);
-        t_engine.setContent(createFcNode("Service Engines",IconFx.get(CadConstants.PASTE)));
+        t_engine.setContent(createFcNode("Service Engines",IconFx.get(CadConstants.ENGINE)));
 
         TabPane tabPane = new TabPane();
         tabPane.getTabs().addAll(t_app, t_lib, t_engine);

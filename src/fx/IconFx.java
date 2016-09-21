@@ -29,6 +29,10 @@ public class IconFx {
     private static Image iCopy = new Image(IconFx.class.getResourceAsStream("../icons/copy.png"));
     private static Image iPaste = new Image(IconFx.class.getResourceAsStream("../icons/paste.png"));
     private static Image iConnection = new Image(IconFx.class.getResourceAsStream("../icons/connection.png"));
+    private static Image iPlay = new Image(IconFx.class.getResourceAsStream("../icons/play.png"));
+    private static Image iArchive = new Image(IconFx.class.getResourceAsStream("../icons/archive.png"));
+    private static Image iFolder = new Image(IconFx.class.getResourceAsStream("../icons/folder.png"));
+    private static Image iService = new Image(IconFx.class.getResourceAsStream("../icons/service.png"));
 
 
     // severity image viewers
@@ -44,6 +48,10 @@ public class IconFx {
     private static ImageView _copy = new ImageView(iCopy);
     private static ImageView _paste = new ImageView(iPaste);
     private static ImageView _connection = new ImageView(iConnection);
+    private static ImageView _play = new ImageView(iPlay);
+    private static ImageView _archive = new ImageView(iArchive);
+    private static ImageView _folder = new ImageView(iFolder);
+    private static ImageView _service = new ImageView(iService);
 
 
     /**
@@ -82,6 +90,18 @@ public class IconFx {
                 break;
             case CadConstants.CONNECTION:
                 result = _connection;
+                break;
+            case CadConstants.PLAY:
+                result = _play;
+                break;
+            case CadConstants.LIB:
+                result = _archive;
+                break;
+            case CadConstants.ENGINE:
+                result = _folder;
+                break;
+            case CadConstants.SERVICE:
+                result = _service;
                 break;
             default:
                 result = _info;

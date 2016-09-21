@@ -1,6 +1,6 @@
 package appd.model;
 
-import appd.view.appconfig.CadAppConfigMain;
+import appd.view.CadAppConfig;
 import common.CadConstants;
 import fx.components.ConfirmBoxFx;
 import fx.components.InputBoxFx;
@@ -55,7 +55,7 @@ public class CadModel {
     }
 
     public void mNew(){
-        new CadAppConfigMain();
+        new CadAppConfig();
 
 //        {
 //            String result = CadConstants.UDF;

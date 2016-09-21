@@ -2,6 +2,8 @@ package appd.view;
 
 import appd.model.CadModel;
 import fx.components.MenuItemFx;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -20,13 +22,15 @@ public class CadMainMenuBar extends MenuBar {
 
 
     private CadModel model;
+    private CadMain owner;
 
     /**
      * Creates the main menu bar
      */
-    public CadMainMenuBar(CadModel model) {
+    public CadMainMenuBar(CadModel model, CadMain owner) {
         super();
         this.model = model;
+        this.owner = owner;
         getMenus().addAll(
                 createFileMenu(),
                 createEditMenu(),
@@ -79,7 +83,10 @@ public class CadMainMenuBar extends MenuBar {
 
         // Exit menu item
         MenuItem _exit = new MenuItemFx.Builder("Exit")
-                .action(e -> System.out.println("exit"))
+                .action(e -> {
+                    owner.close();
+                    System.out.println("exit");
+                })
                 .build();
 
 
@@ -152,26 +159,26 @@ public class CadMainMenuBar extends MenuBar {
      */
     private Menu createRunMenu() {
         // Local menu item
-        MenuItem _local = new MenuItemFx.Builder("Local...")
+        MenuItem _confEdit = new MenuItemFx.Builder("Edit Configuration...")
                 .aKey("Ctrl")
-                .aLetter("L")
-                .action(e -> System.out.println("local"))
+                .aLetter("E")
+                .action(e -> System.out.println("Edit Configuration"))
                 .build();
-        _local.disableProperty().bind(model.appDDisableProperty);
+//        _confEdit.disableProperty().bind(model.appDDisableProperty);
 
         // cloud menu item
-        MenuItem _cloud = new MenuItemFx.Builder("Cloud...")
+        MenuItem _startDp = new MenuItemFx.Builder("Start Data Processing")
                 .aKey("Ctrl")
-                .aLetter("R")
-                .action(e -> System.out.println("cloud"))
+                .aLetter("G")
+                .action(e -> System.out.println("Start Data Processing"))
                 .build();
-        _cloud.disableProperty().bind(model.appDDisableProperty);
+        _startDp.disableProperty().bind(model.appDDisableProperty);
 
 
         Menu m = new Menu("Run");
         m.getItems().addAll(
-                _local, new SeparatorMenuItem(),
-                _cloud
+                _confEdit, new SeparatorMenuItem(),
+                _startDp
         );
         return m;
     }
@@ -183,22 +190,16 @@ public class CadMainMenuBar extends MenuBar {
      */
     private Menu createBuildMenu() {
         // compile a service menu item
-        MenuItem _compile = new MenuItemFx.Builder("Compile")
-                .action(e -> System.out.println("compile"))
+        MenuItem _buildEngine = new MenuItemFx.Builder("Service Engine")
+                .action(e -> System.out.println("Build Service Engine"))
                 .build();
-        _compile.disableProperty().bind(model.serviceDDisableProperty);
-
-        // generate javadoc of a service menu item
-        MenuItem _javaDoc = new MenuItemFx.Builder("Generate JavaDoc")
-                .action(e -> System.out.println("generate javadoc"))
-                .build();
-        _javaDoc.disableProperty().bind(model.serviceDDisableProperty);
+        _buildEngine.disableProperty().bind(model.serviceDDisableProperty);
 
 
         Menu m = new Menu("Build");
         m.getItems().addAll(
-                _compile, new SeparatorMenuItem(),
-                _javaDoc
+                _buildEngine
+//                , new SeparatorMenuItem()
         );
         return m;
     }
