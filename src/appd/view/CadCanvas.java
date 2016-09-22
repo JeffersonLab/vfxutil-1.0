@@ -33,7 +33,6 @@ public class CadCanvas extends Canvas implements Serializable {
     private double gridSize = 50;
     private NodeFx sourceNode = null;
     private ArchFx _arch = null;
-    private CadColor black = CadColor.BLACK;
 
     public CadCanvas(Stage primaryStage, Group root, int yOffset) {
         super(CadConstants.CANVAS_WIDTH, CadConstants.CANVAS_HEIGHT);
@@ -43,6 +42,7 @@ public class CadCanvas extends Canvas implements Serializable {
         heightProperty().bind(primaryStage.heightProperty());
 
         gc = getGraphicsContext2D();
+        CadColor black = CadColor.BLACK;
         gc.setStroke(Color.web(black.getRGB()));
         gc.setLineWidth(0.5);
 

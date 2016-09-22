@@ -3,6 +3,7 @@ package appd.view;
 import appd.model.CadModel;
 import common.CadColor;
 import common.CadConstants;
+import fx.UtilFx;
 import fx.components.NodeFx;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -11,7 +12,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.security.GeneralSecurityException;
 
 /**
  * Clara application designer
@@ -30,11 +40,14 @@ public class CadMain extends Application {
     CadMainMenuBar menuBar;
     CadMainToolBar toolBar;
     CadModel model = new CadModel();
-
+    WebView docWebMon = new WebView();
+    WebView docWebDoc = new WebView();
 
     public static void main(String[] args) {
+        UtilFx.disableWebCertificates();
         Application.launch(args);
     }
+
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -64,9 +77,12 @@ public class CadMain extends Application {
 
         Tab t_monitor = new Tab("Monitor");
         t_monitor.setClosable(false);
+        t_monitor.setContent(createMonTab());
+
 
         Tab t_doc = new Tab("Documentation");
         t_doc.setClosable(false);
+        t_doc.setContent(createDocTab());
 
         TabPane tabPane = new TabPane();
         tabPane.getTabs().addAll(t_designer, t_monitor, t_doc);
@@ -99,24 +115,17 @@ public class CadMain extends Application {
         root.getChildren().addAll(grid, node1, node2, node3);
         grid.toFront();
 
-
         return root;
-
-//        TreeFx libTree = new TreeFx.Builder("Service Engines")
-//                .expand(true)
-//                .rootImage(IconFx.get(CadConstants.SERVICE))
-//                .build();
-//
-//        SplitPane splitPane = new SplitPane();
-//        splitPane.getItems().addAll(root, libTree.show());
-//        splitPane.widthProperty().addListener(observable ->
-//                root.getChildren().forEach(e ->
-//                        e.resize(splitPane.getWidth(), splitPane.getHeight())));
-
-//        return splitPane;
-
     }
 
+    public Node createMonTab(){
+        docWebMon.getEngine().load("http://claraweb.jlab.org:3000");
+        return docWebMon;
+    }
+    public Node createDocTab(){
+        docWebDoc.getEngine().load("https://claraweb.jlab.org");
+        return docWebDoc;
+    }
 
     public void close(){
         window.close();
